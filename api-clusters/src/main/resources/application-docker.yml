@@ -50,4 +50,7 @@ connector:
       host: http://api-itineraries-search:7070
       responseTimeout: 10000
       connectionTimeout: 10000
-      readTimeout: 10000         
+      readTimeout: 10000
+cache:
+  maximum-size: 500
+  expire-after-write-minutes: 30
