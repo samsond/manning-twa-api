@@ -52,11 +52,10 @@ public class ProviderBetaConnector {
                 .clientConnector(connector).baseUrl(configuration.getHost()).build();
 
         return client.get()
-                .uri(uriBuilder -> uriBuilder.path(SEARCH)
-                        .queryParam("adults", request.getAdults()).queryParam("children", request.getChildren())
-                        .queryParam("infants", request.getInfants()).queryParam("amount", request.getAmount())
-                        .queryParam("departure", request.getDeparture()).queryParam("from", request.getFrom())
-                        .queryParam("to", request.getTo()).build())
+                .uri(uriBuilder -> uriBuilder.path(SEARCH).queryParam("adults", request.getAdults())
+                        .queryParam("children", request.getChildren()).queryParam("infants", request.getInfants())
+                        .queryParam("amount", request.getAmount()).queryParam("departure", request.getDeparture())
+                        .queryParam("from", request.getFrom()).queryParam("to", request.getTo()).build())
                 .retrieve().onStatus(HttpStatusCode::isError, clientResponse -> {
                     LOGGER.error("Error while calling endpoint {} with status code {}", SEARCH,
                             clientResponse.statusCode());
