@@ -10,7 +10,10 @@ default_ttl = 3600s; # Set cache duration to 1 hour
 
 sub vcl_recv {
     if (req.method == "GET" || req.method == "HEAD") {
-        return (hash);
+        if (req.url ~ "^/api/flights/catalog/city/.*$") {
+            return (hash);
+        }
+
     }
     # Do not cache other HTTP methods
     return (pass);
@@ -19,7 +22,10 @@ sub vcl_recv {
 sub vcl_backend_response {
     # Allow caching for HTTP 200 responses
     if (beresp.status == 200) {
-        set beresp.ttl = 3600s;
+        if (bereq.url ~ "^/api/flights/catalog/city/.*$") {
+            set beresp.ttl = 3600s;
+        }
+
     } else {
         set beresp.ttl = 0s;
     }
